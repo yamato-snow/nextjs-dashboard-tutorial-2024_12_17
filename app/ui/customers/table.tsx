@@ -11,9 +11,9 @@ export default async function CustomersTable({
   return (
     <div className="w-full">
       <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
-        Customers
+        顧客
       </h1>
-      <Search placeholder="Search customers..." />
+      <Search placeholder="顧客を検索..." />
       <div className="mt-6 flow-root">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full align-middle">
@@ -31,7 +31,7 @@ export default async function CustomersTable({
                             <Image
                               src={customer.image_url}
                               className="rounded-full"
-                              alt={`${customer.name}'s profile picture`}
+                              alt={`${customer.name}のプロフィール画像`}
                               width={28}
                               height={28}
                             />
@@ -45,16 +45,16 @@ export default async function CustomersTable({
                     </div>
                     <div className="flex w-full items-center justify-between border-b py-5">
                       <div className="flex w-1/2 flex-col">
-                        <p className="text-xs">Pending</p>
+                        <p className="text-xs">未払い</p>
                         <p className="font-medium">{customer.total_pending}</p>
                       </div>
                       <div className="flex w-1/2 flex-col">
-                        <p className="text-xs">Paid</p>
+                        <p className="text-xs">支払済</p>
                         <p className="font-medium">{customer.total_paid}</p>
                       </div>
                     </div>
                     <div className="pt-4 text-sm">
-                      <p>{customer.total_invoices} invoices</p>
+                      <p>{customer.total_invoices} 請求書</p>
                     </div>
                   </div>
                 ))}
@@ -63,19 +63,19 @@ export default async function CustomersTable({
                 <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
                   <tr>
                     <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
-                      Name
+                      名前
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
-                      Email
+                      メールアドレス
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
-                      Total Invoices
+                      請求書
                     </th>
                     <th scope="col" className="px-3 py-5 font-medium">
-                      Total Pending
+                      未払い
                     </th>
                     <th scope="col" className="px-4 py-5 font-medium">
-                      Total Paid
+                      支払済
                     </th>
                   </tr>
                 </thead>
@@ -88,7 +88,7 @@ export default async function CustomersTable({
                           <Image
                             src={customer.image_url}
                             className="rounded-full"
-                            alt={`${customer.name}'s profile picture`}
+                            alt={`${customer.name}のプロフィール画像`}
                             width={28}
                             height={28}
                           />
