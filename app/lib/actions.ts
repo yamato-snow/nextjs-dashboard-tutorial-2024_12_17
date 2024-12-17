@@ -10,13 +10,13 @@ import { AuthError } from 'next-auth';
 const FormSchema = z.object({
   id: z.string(),
   customerId: z.string({
-    invalid_type_error: 'Please select a customer.',
+    invalid_type_error: '顧客を選択してください。',
   }),
   amount: z.coerce
     .number()
-    .gt(0, { message: 'Please enter an amount greater than $0.' }),
+    .gt(0, { message: '0より大きい金額を入力してください。' }),
   status: z.enum(['pending', 'paid'], {
-    invalid_type_error: 'Please select an invoice status.',
+    invalid_type_error: '請求書のステータスを選択してください。',
   }),
   date: z.string(),
 });
@@ -34,40 +34,40 @@ export type State = {
 };
 
 export async function createInvoice(prevState: State, formData: FormData) {
-  // Validate form fields using Zod
+  // Zodを使用してフォームフィールドを検証する
   const validatedFields = CreateInvoice.safeParse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
     status: formData.get('status'),
   });
 
-  // If form validation fails, return errors early. Otherwise, continue.
+  // フォームの検証が失敗した場合、エラーを早期に返す。それ以外の場合は続行する。
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
+      message: 'フィールドが見つかりません。請求書の作成に失敗しました。',
     };
   }
 
-  // Prepare data for insertion into the database
+  // データベースへの挿入のためにデータを準備する
   const { customerId, amount, status } = validatedFields.data;
   const amountInCents = amount * 100;
   const date = new Date().toISOString().split('T')[0];
 
-  // Insert data into the database
+  // データベースへの挿入
   try {
     await sql`
       INSERT INTO invoices (customer_id, amount, status, date)
       VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
     `;
   } catch (error) {
-    // If a database error occurs, return a more specific error.
+    // データベースエラーが発生した場合、より具体的なエラーを返す。
     return {
-      message: 'Database Error: Failed to Create Invoice.',
+      message: 'データベースエラー: 請求書の作成に失敗しました。',
     };
   }
 
-  // Revalidate the cache for the invoices page and redirect the user.
+  // 請求書ページのキャッシュを再検証し、ユーザーをリダイレクトする。
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');
 }
@@ -86,7 +86,7 @@ export async function updateInvoice(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Update Invoice.',
+      message: 'フィールドが見つかりません。請求書の更新に失敗しました。',
     };
   }
 
@@ -100,7 +100,7 @@ export async function updateInvoice(
       WHERE id = ${id}
     `;
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Invoice.' };
+    return { message: 'データベースエラー: 請求書の更新に失敗しました。' };
   }
 
   revalidatePath('/dashboard/invoices');
@@ -122,9 +122,9 @@ export async function authenticate(
     if (error instanceof AuthError) {
       switch (error.type) {
         case 'CredentialsSignin':
-          return 'Invalid credentials.';
+          return '無効な資格情報です。';
         default:
-          return 'Something went wrong.';
+          return '何かがうまくいきませんでした。';
       }
     }
     throw error;

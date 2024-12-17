@@ -29,7 +29,7 @@ export default function EditInvoiceForm({
         {/* Customer Name */}
         <div className="mb-4">
           <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-            Choose customer
+            顧客を選択
           </label>
           <div className="relative">
             <select
@@ -40,7 +40,7 @@ export default function EditInvoiceForm({
               aria-describedby="customer-error"
             >
               <option value="" disabled>
-                Select a customer
+                顧客を選択
               </option>
               {customers.map((customer) => (
                 <option key={customer.id} value={customer.id}>
@@ -64,7 +64,7 @@ export default function EditInvoiceForm({
         {/* Invoice Amount */}
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
-            Choose an amount
+            金額を選択
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
@@ -74,7 +74,7 @@ export default function EditInvoiceForm({
                 type="number"
                 defaultValue={invoice.amount}
                 step="0.01"
-                placeholder="Enter USD amount"
+                placeholder="USD金額を入力"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="amount-error"
               />
@@ -95,7 +95,7 @@ export default function EditInvoiceForm({
         {/* Invoice Status */}
         <fieldset>
           <legend className="mb-2 block text-sm font-medium">
-            Set the invoice status
+            請求書のステータスを設定
           </legend>
           <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
             <div className="flex gap-4">
